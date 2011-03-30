@@ -1,0 +1,19 @@
+body {
+  background: black;
+  padding: 0px;
+  margin: 0px;
+}
+
+.thumbnail {
+  border: 5px solid white;
+}
+
+a { 
+  text-decoration: none;
+}
+
+img#medium {
+  border: 5px solid white;
+  position: absolute;
+}
+

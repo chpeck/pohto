@@ -1,1 +1,1 @@
-<%= link_to album["key"].join("-"), album_photos_path(album["key"].join("-")) %>
+<%= link_to render(:partial => "/photos/photo", :object => album[:photo]), album_photos_path(album[:date]) %>
