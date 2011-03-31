@@ -1,7 +1,5 @@
 body {
   background: black;
-  padding: 0px;
-  margin: 0px;
 }
 
 .thumbnail {
@@ -13,6 +11,7 @@ a {
 }
 
 img#medium {
+  -webkit-box-shadow: 0px 0px 10px black;
   border: 5px solid white;
   position: absolute;
 }
