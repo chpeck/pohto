@@ -1,20 +1,35 @@
-// Place your application-specific JavaScript functions and classes here
-// This file is automatically included by javascript_include_tag :defaults
+var current = null;
+
 $(function(){
-  $('img.thumbnail').hover(function() {
-    var img = $('img#medium')[0];
-    img.src = this.getAttribute('data-medium');
-    img.onload = function () { $('img#medium').show() };
-  }, function() {
+  $('img.thumbnail').mouseover(function(e) {
+    e.stopPropagation();
+    current = this.getAttribute('data-medium');
+  });
+
+  $('body').mouseover(function() {
+    current = null;
     $('img#medium').hide();
+    $('img#medium')[0].style.width=null;
+    $('img#medium')[0].style.height=null;
+  });
+
+  $('img#medium').mouseover(function(e) {
+    e.stopPropagation();
+    $('img#medium').show();
   });
 
   $(document).mousemove(function(e){
     var img = $('img#medium');
+    if(current && img[0].src != current) {
+      img[0].src = current;
+      img[0].onload = function() { 
+        img.show(); 
+      }
+    } 
     if(img.width() == 0 || img.height() == 0) return;
     var midx = $(window).width() / 2;
     var top = e.pageY - (img.height() / 2);
-    if (top < 0) top = 0;
+    if (top < $(window).scrollTop()) top = $(window).scrollTop();
     if (top + img.height() > $(window).scrollTop() + $(window).height()) {
       top = $(window).scrollTop() + $(window).height() - img.height() - 10;
     }
