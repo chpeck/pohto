@@ -1,5 +1,5 @@
 var current = null;
-
+var angle = 0;
 $(function(){
   $('img.thumbnail').mouseover(function(e) {
     e.stopPropagation();
@@ -48,5 +48,15 @@ $(function(){
       }
       img.css({top: top, left: left});
     } 
+  }).keyup(function(e) {
+    if(e.keyCode == 82) {
+      angle += 90;
+    }
+    if(e.keyCode == 76) {
+      angle -= 90;
+    }
+    if(angle < 0) angle = 360 + angle;
+    angle = angle % 360;
+    $('img#medium').rotate(angle);
   }); 
 });
