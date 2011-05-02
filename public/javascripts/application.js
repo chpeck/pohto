@@ -1,9 +1,10 @@
 var current = null;
 var angle = 0;
+
 $(function(){
   $('img.thumbnail').mouseover(function(e) {
     e.stopPropagation();
-    current = this.getAttribute('data-medium');
+    current = this;
   });
 
   $('body').mouseover(function() {
@@ -20,8 +21,8 @@ $(function(){
 
   $(document).mousemove(function(e){
     var img = $('img#medium');
-    if(current && img[0].src != current) {
-      img[0].src = current;
+    if(current && img[0].src != current.getAttribute('data-medium')) {
+      img[0].src = current.getAttribute('data-medium');
       img[0].onload = function() { 
         img.show(); 
       }
@@ -49,14 +50,19 @@ $(function(){
       img.css({top: top, left: left});
     } 
   }).keyup(function(e) {
-    if(e.keyCode == 82) {
-      angle += 90;
+    if(e.keyCode == 82 || e.keyCode == 76) {
+      if(e.keyCode == 82) {
+        angle += 90;
+      }
+      if(e.keyCode == 76) {
+        angle -= 90;
+      }
+      if(angle < 0) angle = 360 + angle;
+      angle = angle % 360;
+      $('img#medium').rotate(angle);
     }
-    if(e.keyCode == 76) {
-      angle -= 90;
+    if(e.keyCode == 68) {
+      if(current) window.location = 'photos/' + current.getAttribute('id');
     }
-    if(angle < 0) angle = 360 + angle;
-    angle = angle % 360;
-    $('img#medium').rotate(angle);
   }); 
 });
