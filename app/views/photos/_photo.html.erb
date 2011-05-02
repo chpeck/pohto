@@ -1,1 +1,1 @@
-<%= image_tag(photo.thumbnail.url(:thumbnail), :class => "thumbnail", "data-medium" => photo.thumbnail.url(:medium), "data-original" => photo.thumbnail.url(:original), :id => photo.id) %>
+<%= link_to render(:partial => "thumbnail", :object => photo), photo_path(photo) %>

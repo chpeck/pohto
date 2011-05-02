@@ -17,6 +17,8 @@ Pohto::Application.routes.draw do
     resources :photos
   end
 
+  resources :photos
+
   # Sample resource route with options:
   #   resources :products do
   #     member do

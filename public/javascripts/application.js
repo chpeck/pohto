@@ -61,8 +61,5 @@ $(function(){
       angle = angle % 360;
       $('img#medium').rotate(angle);
     }
-    if(e.keyCode == 68) {
-      if(current) window.location = 'photos/' + current.getAttribute('id');
-    }
   }); 
 });
