@@ -1,2 +1,2 @@
-<%= render :partial => "album", :collection => @albums %>
+<%= render :partial => "album", :collection => @albums, :locals => {:size => @albums.size} %>
 <img id="medium" style="display:none"></img>

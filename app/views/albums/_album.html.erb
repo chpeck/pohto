@@ -1,1 +1,5 @@
 <%= link_to render(:partial => "/photos/thumbnail", :object => album[:photo]), album_photos_path(album[:date]) %>
+<% if album_counter == size - 1 %>
+<div id="next-page" data-url="<%= url_for :controller => "albums", :action => "index", :start_key => album[:date] %>"></div>
+<% end %>
+

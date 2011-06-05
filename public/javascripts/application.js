@@ -61,5 +61,14 @@ $(function(){
       angle = angle % 360;
       $('img#medium').rotate(angle);
     }
-  }); 
+  });
+
+  $(window).scroll(function() {
+    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+      $('div#next-page').css('visibility','visible');
+      $.get($('div#next-page').attr('data-url'), function(data) {
+        $('div#next-page').replaceWith(data);
+      });
+    }
+  });
 });
