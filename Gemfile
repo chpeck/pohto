@@ -4,6 +4,8 @@ gem 'rails', '3.0.5'
 gem 'couchrest_model'
 gem 'exifr'
 gem 'paperclip'
+gem 'guard'
+gem 'rb-fsevent'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
