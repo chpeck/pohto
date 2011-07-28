@@ -2,7 +2,7 @@ require 'find'
 
 class Photo < CouchRest::Model::Base
   COUCHDB_URL = ENV['CLOUDANT_URL'] || 'http://localhost:5984'
-  use_database CouchRest::Server.new(COUCHDB_URL).database!(Rails.env.production? ? "pohto" : "pohto_#{RAILS_ENV}")
+  use_database CouchRest::Server.new(COUCHDB_URL).database!(Rails.env.production? ? "pohto" : "pohto_#{Rails.env}")
   property :file, Hash
   property :exif, Hash
 
