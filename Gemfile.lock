@@ -117,5 +117,6 @@ DEPENDENCIES
   guard
   paperclip
   rails (= 3.0.5)
+  rake
   rb-fsevent (>= 0.4.0)
   ruby-debug19

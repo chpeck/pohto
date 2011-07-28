@@ -5,6 +5,7 @@ gem 'couchrest_model'
 gem 'exifr'
 gem 'paperclip'
 gem 'guard'
+gem 'rake'
 
 group :development, :test do
   gem 'ruby-debug19', :require => 'ruby-debug'
