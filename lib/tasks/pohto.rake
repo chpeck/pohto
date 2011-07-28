@@ -2,11 +2,12 @@ namespace :import do
   desc 'Import Photos from this directory'
   task :directory, :path do |cmd, args|
     Rake::Task[:environment].invoke
-    Photo.import(args[:path])
+    Photo.import_dir(args[:path])
   end
 
   desc 'watch the directory for new files'
   task :watch, :path do |cmd, args|
+    Rake::Task[:environment].invoke
     begin
       pwd = Dir.pwd
       Dir.chdir(args[:path])

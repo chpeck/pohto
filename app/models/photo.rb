@@ -21,7 +21,24 @@ class Photo < CouchRest::Model::Base
           }
   }", :reduce => "_count")
 
-  def self.import(path)
+  def self.import_file(path)
+    return if FileTest.size(path).zero?
+    begin
+      doc = self.new("_id" => Digest::MD5.hexdigest(File.read(path)))
+      doc.file = {:path => path, :ctime => File.ctime(path)}
+      exif = EXIFR::JPEG.new(path).to_hash 
+      exif[:date_time_original] = exif[:date_time_original].iso8601 if exif[:date_time_original]
+      doc.exif = exif.slice(:width, :height, :comment, :date_time_original, :orientation, :user_comment) rescue nil
+      doc.thumbnail = open(path)
+      doc.save            
+    rescue RestClient::Conflict
+      puts "#{doc.file[:path]} already in db. Clashes with #{Photo.get(doc.id).file['path']}"
+    rescue EXIFR::MalformedJPEG
+      puts "Skipping #{doc.file[:path]} not JPEG"
+    end
+  end
+
+  def self.import_dir(path)
     Find.find(path) do |p|
       if FileTest.directory?(p)
         if File.basename(p)[0] == ?.
@@ -30,20 +47,7 @@ class Photo < CouchRest::Model::Base
           next
         end
       else
-        next if FileTest.size(p).zero?
-        begin
-          doc = self.new("_id" => Digest::MD5.hexdigest(File.read(p)))
-          doc.file = {:path => p, :ctime => File.ctime(p)}
-          exif = EXIFR::JPEG.new(p).to_hash 
-          exif[:date_time_original] = exif[:date_time_original].iso8601 if exif[:date_time_original]
-          doc.exif = exif.slice(:width, :height, :comment, :date_time_original, :orientation, :user_comment) rescue nil
-          doc.thumbnail = open(p)
-          doc.save            
-        rescue RestClient::Conflict
-          puts "#{doc.file[:path]} already in db. Clashes with #{Photo.get(doc.id).file['path']}"
-        rescue EXIFR::MalformedJPEG
-          puts "Skipping #{doc.file[:path]} not JPEG"
-        end
+        import_file(p)
       end 
     end
   end

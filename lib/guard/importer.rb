@@ -24,8 +24,9 @@ module ::Guard
     end
 
     def run_on_change(paths)
-      abs_paths = paths.collect {|path| File.join(Dir.pwd, path) }
-      puts "Run On Change : #{abs_paths}"
+      paths.each do |path| 
+        Photo.import_file(File.join(Dir.pwd, path))
+      end
     end
   end
 end
